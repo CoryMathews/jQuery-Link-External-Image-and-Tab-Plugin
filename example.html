@@ -1,0 +1,72 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<style>
+</style>
+<script>
+	/*!
+	 * jQuery External Image and Tab Plugin
+	 * Examples and documentation at: http://corymathews.com/719/jquery-external-image-and-tab-plugin/
+	 * By: Cory Mathews (corymathews.com)
+	 * Version: 1 (20110914)
+	 * License: WTFPL (http://en.wikipedia.org/wiki/WTFPL)
+	 */
+	(function($){
+		$.fn.extTab = function(params) {
+	        var defaults = { 
+	            blank:true,
+	            path:'',
+	            ignore:''
+	        };
+	        params = $.extend(defaults, params);
+
+	        var t = $(this).find("a[href^='http:']").not("[href*='" + document.location.host + "']");
+	        if(params.ignore != '') {
+	        	t = t.not("[class*='" + params.ignore + "']");
+	        }
+	    	if(params.blank) {
+	    		t.attr( "target", "_blank" );
+	    	}
+	    	if(params.path != '') {
+	    		t.append(' <img src="http://' + document.location.host + params.path + '">'); 
+	    	}
+	    };
+	})(jQuery);
+	
+	$(function(){
+		$(".example1").extTab();
+		$(".example2").extTab({ path:'/src/extImage.png' });
+		$(".example3").extTab({ blank:false, path:'/src/extImage.png', ignore:'noext' });
+	});		
+</script>
+</head>
+<body>
+	<h1>jQuery External Image and Tab Plugin</h1>
+	<a href="http://corymathews.com/719/jquery-external-image-and-tab-plugin/" title="jQuery External Image and Tab Plugin">Back to article</a>
+	<h2>Examples</h2>
+	<p><strong>Default Settings</strong></p>
+	<code>$(".example1").extTab();</code>
+	<div class="example1">
+		<p><a href="http://google.com/">Outbound Google</a></p>
+		<p><a href="./">Internal Link</a></p>
+		<p><a href="http://google.com" class="noext">Ignored Class External Link</a></p>
+	</div>
+	<hr>
+	<p><strong>Image Path Provided</strong></p>
+	<code>$(".example2").extTab({ path:'/src/extImage.png' });</code>
+	<div class="example2">
+		<p><a href="http://google.com/">Outbound Google</a></p>
+		<p><a href="./">Internal Link</a></p>
+		<p><a href="http://google.com" class="noext">Ignored Class External Link</a></p>
+	</div>
+	<hr>
+	<p><strong>All Settings Changed</strong></p>
+	<code>$(".example3").extTab({ blank:false, path:'/src/extImage.png', ignore:'noext' });</code>
+	<div class="example3">
+		<p><a href="http://google.com/">Outbound Google</a></p>
+		<p><a href="./">Internal Link</a></p>
+		<p><a href="http://google.com" class="noext">Ignored Class External Link</a></p>
+	</div>
+
+</body>
+</html>
